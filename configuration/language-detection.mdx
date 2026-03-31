@@ -1,0 +1,65 @@
+---
+title: "Language Detection"
+description: "Understand how the widget determines which language to display, and configure auto-detection"
+---
+
+When the widget initializes, it goes through a priority chain to determine which language to display. Understanding this order helps you predict the widget's behavior and design the right experience for your users.
+
+## Priority order
+
+The widget resolves the active language using the following order, from highest to lowest priority:
+
+<Steps>
+  <Step title="lang URL parameter">
+    If the page URL contains a `lang` query parameter with a supported language code, the widget uses it immediately.
+
+    ```
+    https://yoursite.com?lang=fr
+    ```
+
+    This overrides all other settings, making it ideal for sharing language-specific links or deep-linking to translated pages.
+  </Step>
+
+  <Step title="User's saved preference">
+    If no URL parameter is present, the widget checks `localStorage` for a previously saved preference under the key `jss-pref`. This is set automatically whenever a user selects a language from the widget dropdown.
+  </Step>
+
+  <Step title="pageLanguage config option">
+    If neither of the above applies, the widget falls back to the `pageLanguage` value you provided in config (default: `"en"`).
+  </Step>
+</Steps>
+
+## Auto-detecting browser language
+
+Set `autoDetectLanguage: true` to have the widget read the user's browser language (`navigator.language`) and automatically translate the page on load if the detected language differs from `pageLanguage`.
+
+```javascript
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  autoDetectLanguage: true,
+  pageLanguage: "en",
+});
+```
+
+When `autoDetectLanguage` is enabled and no URL parameter or localStorage preference is found, the widget uses the browser language as the initial language instead of falling back to `pageLanguage`.
+
+<Note>
+  When `autoDetectLanguage` is `false` (the default), the widget skips browser language detection entirely. It reads the URL parameter first, then localStorage, then falls back to `pageLanguage`.
+</Note>
+
+## localStorage key
+
+The widget stores the user's selected language in `localStorage` under the key `jss-pref`. This persists between sessions so returning users see the site in their preferred language without re-selecting it.
+
+You can read or clear this key directly if you need to reset a user's language preference programmatically:
+
+```javascript
+// Read the stored preference
+const pref = localStorage.getItem("jss-pref");
+
+// Clear the stored preference
+localStorage.removeItem("jss-pref");
+```
+
+<Tip>
+  Use URL parameters for deep-linking to translated pages or sharing language-specific links with users. Because URL parameters take the highest priority, they are a reliable way to ensure a specific language is displayed regardless of the user's stored preference.
+</Tip>

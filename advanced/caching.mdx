@@ -1,0 +1,81 @@
+---
+title: "Caching"
+description: "Understand how the widget caches translations to improve performance"
+---
+
+The widget includes a built-in caching layer that stores translations in `localStorage`. This makes repeat visits dramatically faster and reduces the number of API calls made to JigsawStack.
+
+## How Caching Works
+
+When the widget translates a page, it stores each original text → translated text pair in `localStorage`. The next time the same page is visited in the same language, the cached translations are applied instantly without calling the API.
+
+- **Storage**: `localStorage`, with keys prefixed by `jss-`
+- **Cache key format**: `jss-<language-code>` (e.g., `jss-fr` for French) — one entry per target language per browser
+- **Cache contents**: a JSON map of `{ originalText: translatedText }` pairs for all translated content
+- **Compression**: entries larger than 10,000 characters are automatically compressed using LZ-string before being stored
+
+### Key constants
+
+| Constant         | Value  | Description                                       |
+| ---------------- | ------ | ------------------------------------------------- |
+| `CACHE_PREFIX`   | `jss-` | Prefix for all cache keys in `localStorage`       |
+| `MAX_CACHE_SIZE` | `1000` | Maximum cache entries constant defined in source  |
+| `BATCH_SIZE`     | `90`   | Number of text nodes sent to the API per request  |
+
+<Note>
+  The cache is per-browser. Clearing it in one browser or device does not affect
+  cached translations in any other browser or device.
+</Note>
+
+---
+
+## Benefits
+
+- **Faster page loads** on repeat visits — cached translations are applied without any network round-trip
+- **Reduced API usage** — only untranslated or updated content triggers new API calls
+- **Reduced API usage** — only untranslated or updated content triggers new API calls once translations are cached
+
+---
+
+## Rate Limiting
+
+The widget includes an internal rate limiter capped at **45 requests per second** to the JigsawStack API. When translating pages with a large number of text nodes, the widget batches requests (up to 90 nodes per batch) and respects this limit automatically.
+
+---
+
+## When Cache Is Bypassed
+
+The cache is not used in the following cases:
+
+- `window.clearCache()` is called programmatically
+- The user manually clears `localStorage` in their browser
+- A text node has no existing cache entry (first visit or after a cache clear)
+
+---
+
+## Clearing the Cache Programmatically
+
+You can clear the cache at any time using `window.clearCache()`. This is useful after deploying content updates to ensure users receive fresh translations instead of stale cached text.
+
+```javascript
+// Clear all cached translations
+window.clearCache([], () => {
+  console.log("Cache cleared");
+});
+
+// Clear cache for specific languages
+window.clearCache(["es", "fr"], () => {
+  console.log("Cache cleared for Spanish and French");
+});
+```
+
+For the full API reference, see the [Clear Cache](/api/clear-cache) page.
+
+<Tip>
+  Call `window.clearCache()` after deploying significant content updates to force
+  users to receive fresh translations on their next visit.
+</Tip>
+
+<Note>
+  `MAX_CACHE_SIZE` is defined as 1,000 in the source constants. The cache stores one JSON object per language code in localStorage.
+</Note>

@@ -1,97 +1,65 @@
 ---
-title: "Introduction"
-description: "Welcome to the new home for your documentation"
+title: "JigsawStack Translation Widget"
+description: "A drop-in, open source translation widget that translates any website with a single script tag. Powered by JigsawStack's contextual translation engine."
 ---
 
-## Setting up
+Add multilingual support to any website in minutes — no backend required. The JigsawStack Translation Widget detects content, translates it via JigsawStack's AI engine, and caches results locally for fast repeat visits. Works with plain HTML, React, and Next.js.
 
-Get your documentation site up and running in minutes.
-
-<Card
-  title="Start here"
-  icon="rocket"
-  href="/quickstart"
-  horizontal
->
-  Follow our three step quickstart guide.
-</Card>
-
-## Make it yours
-
-Design a docs site that looks great and empowers your users.
-
-<Columns cols={2}>
-  <Card
-    title="Edit locally"
-    icon="pen-to-square"
-    href="/development"
-  >
-    Edit your docs locally and preview them in real time.
+<CardGroup cols={2}>
+  <Card title="Quick Start" icon="rocket" href="/quickstart">
+    Get your widget running in under 5 minutes with a single script tag or npm install.
   </Card>
-  <Card
-    title="Customize your site"
-    icon="palette"
-    href="/essentials/settings"
-  >
-    Customize the design and colors of your site to match your brand.
+  <Card title="Get Your API Key" icon="key" href="/getting-your-api-key">
+    Sign up for JigsawStack and generate a public key to authenticate the widget.
   </Card>
-    <Card
-    title="Set up navigation"
-    icon="map"
-    href="/essentials/navigation"
-  >
-    Organize your docs to help users find what they need and succeed with your product.
+  <Card title="Configuration Options" icon="sliders" href="/configuration/options">
+    Customize language detection, positioning, font scaling, and widget visibility.
   </Card>
-  <Card
-    title="API documentation"
-    icon="terminal"
-    href="/api-reference/introduction"
-  >
-    Auto-generate API documentation from OpenAPI specifications.
+  <Card title="Programmatic API" icon="code" href="/api/translate">
+    Use `window.translate()`, `window.resetTranslation()`, and `window.clearCache()` to control translations from your code.
   </Card>
-</Columns>
+</CardGroup>
 
-## Create beautiful pages
+## Choose your integration
 
-Everything you need to create world-class documentation.
+<CardGroup cols={2}>
+  <Card title="Script tag (HTML)" icon="html5" href="/guides/script-tag">
+    Drop in two script tags and initialize. Works on any static or server-rendered site.
+  </Card>
+  <Card title="React / Next.js" icon="react" href="/guides/react-nextjs">
+    Import the package and initialize inside a `useEffect` hook.
+  </Card>
+  <Card title="Next.js App Router" icon="layer-group" href="/guides/nextjs-app-router">
+    Client component integration for Next.js 13+ with the App Router.
+  </Card>
+  <Card title="Next.js Pages Router" icon="file-code" href="/guides/nextjs-pages-router">
+    Script component integration for Next.js 12 and below using `_app.tsx`.
+  </Card>
+</CardGroup>
 
-<Columns cols={2}>
-  <Card
-    title="Write with MDX"
-    icon="pen-fancy"
-    href="/essentials/markdown"
-  >
-    Use MDX to style your docs pages.
-  </Card>
-  <Card
-    title="Code samples"
-    icon="code"
-    href="/essentials/code"
-  >
-    Add sample code to demonstrate how to use your product.
-  </Card>
-  <Card
-    title="Images"
-    icon="image"
-    href="/essentials/images"
-  >
-    Display images and other media.
-  </Card>
-  <Card
-    title="Reusable snippets"
-    icon="recycle"
-    href="/essentials/reusable-snippets"
-  >
-    Write once and reuse across your docs.
-  </Card>
-</Columns>
+## Key features
 
-## Need inspiration?
+<CardGroup cols={2}>
+  <Card title="100+ languages" icon="globe">
+    Translate to and from over 100 languages with a single configuration option.
+  </Card>
+  <Card title="Smart caching" icon="database">
+    Translations are cached in localStorage so repeat visits load instantly.
+  </Card>
+  <Card title="Auto language detection" icon="wand-magic-sparkles">
+    Automatically detect the user's browser language and translate on load.
+  </Card>
+  <Card title="URL-based switching" icon="link">
+    Append `?lang=fr` to any URL to load the page in a specific language.
+  </Card>
+  <Card title="Fully customizable UI" icon="palette">
+    Override CSS classes or use the built-in theme options to match your brand.
+  </Card>
+  <Card title="Programmatic control" icon="terminal">
+    Build custom language selectors using the `window.translate()` API.
+  </Card>
+</CardGroup>
 
-<Card
-  title="See complete examples"
-  icon="stars"
-  href="https://mintlify.com/customers"
->
-  Browse our showcase of exceptional documentation sites.
-</Card>
+<Note>
+  The widget requires a **public key** from your [JigsawStack dashboard](https://jigsawstack.com). Make sure translation capabilities are enabled on your key.
+</Note>

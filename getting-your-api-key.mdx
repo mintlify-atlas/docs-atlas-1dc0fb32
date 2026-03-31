@@ -1,0 +1,55 @@
+---
+title: "Getting your API key"
+description: "Create a JigsawStack public key with translation capabilities to authenticate the widget."
+---
+
+The JigsawStack Translation Widget authenticates using a **public key** from your JigsawStack account. This key links widget usage to your account and controls which API capabilities are accessible.
+
+<Warning>
+  Always use a **public key** (prefixed with `pk_`), not a secret key (prefixed with `sk_`). The widget validates the key format on initialization and will refuse to start if a secret key is passed. Secret keys must never be exposed in client-side code or committed to source control.
+</Warning>
+
+<Steps>
+  <Step title="Sign up or log in">
+    Go to [jigsawstack.com](https://jigsawstack.com) and sign up for an account, or log in if you already have one.
+  </Step>
+
+  <Step title="Create a public API key">
+    Navigate to the API keys section of your [JigsawStack dashboard](https://jigsawstack.com). Create a new key and select **public key** as the key type.
+  </Step>
+
+  <Step title="Enable translation capabilities">
+    When configuring the key, ensure that **translation** capabilities are enabled. The widget calls JigsawStack's translation API on every language change, so the key must have permission to use that endpoint.
+  </Step>
+
+  <Step title="Copy and use the key">
+    Copy the public key from the dashboard and pass it as the first argument to `TranslationWidget()`:
+
+    ```typescript app.ts
+    import TranslationWidget from "translation-widget";
+
+    TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+      pageLanguage: "en",
+      showUI: true,
+      position: "top-right",
+    });
+    ```
+
+    Or with the script tag method:
+
+    ```html index.html
+    <script defer src="https://unpkg.com/translation-widget@latest/dist/index.min.js"></script>
+    <script defer type="module">
+      TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+        pageLanguage: "en",
+        showUI: true,
+        position: "top-right",
+      });
+    </script>
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  Your public key links all translation requests to your JigsawStack account. Usage is tracked against your account's plan limits. Keep the key in your frontend code (it is designed to be public), but avoid sharing it unnecessarily to prevent unintended usage.
+</Note>

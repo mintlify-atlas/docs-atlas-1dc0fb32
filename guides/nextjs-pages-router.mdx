@@ -1,0 +1,58 @@
+---
+title: "Next.js Pages Router"
+description: Integrate the translation widget in a Next.js project using the Pages Router (Next.js 12 and below).
+---
+
+This guide covers integrating the JigsawStack Translation Widget in a Next.js project using the Pages Router, which is the standard approach for Next.js 12 and earlier.
+
+## Approach
+
+The Pages Router integration uses the Next.js built-in `Script` component to load the CDN bundle. Unlike the [App Router approach](/guides/nextjs-app-router), which appends a `<script>` element programmatically via `useEffect`, the Pages Router pattern declares the script declaratively in `_app.tsx` and relies on the `onLoad` callback to run initialization code after the script is ready.
+
+<Steps>
+  <Step title="Update _app.tsx">
+    Open (or create) `pages/_app.tsx` and add the `Script` component with an `onLoad` callback:
+
+    ```tsx
+    import type { AppProps } from "next/app";
+    import Script from "next/script";
+
+    export default function App({ Component, pageProps }: AppProps) {
+      return (
+        <>
+          <Component {...pageProps} />
+          <Script
+            src="https://unpkg.com/translation-widget@latest/dist/index.min.js"
+            onLoad={() => {
+              window.TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+                // configuration options
+              });
+            }}
+          />
+        </>
+      );
+    }
+    ```
+
+    Replace `"YOUR_PUBLIC_KEY_HERE"` with your public key from the [JigsawStack dashboard](https://jigsawstack.com).
+  </Step>
+</Steps>
+
+## How it works
+
+The `onLoad` callback is invoked by Next.js after the CDN script has fully loaded and executed. At that point, `window.TranslationWidget` is available and you can call it with your public key and configuration.
+
+<Note>
+  The Next.js `Script` component handles deferred loading automatically. You do not need to add a `defer` attribute — Next.js manages script loading strategy internally to avoid blocking page rendering.
+</Note>
+
+## App Router vs. Pages Router
+
+| | App Router (Next.js 13+) | Pages Router (Next.js ≤12) |
+|---|---|---|
+| Setup file | `app/layout.tsx` | `pages/_app.tsx` |
+| Script loading | Programmatic via `document.createElement` in `useEffect` | Declarative via Next.js `<Script>` component |
+| Initialization | `script.onload` + `window.addEventListener("load", ...)` | `onLoad` callback on `<Script>` |
+| Cleanup | Manual removal on unmount | Managed by Next.js |
+
+For the App Router setup, see [Next.js App Router](/guides/nextjs-app-router).

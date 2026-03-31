@@ -1,0 +1,64 @@
+---
+title: "Widget Positioning"
+description: "Control where the translation widget button appears on your page"
+---
+
+Use the `position` option to place the widget button in one of four corners of the page. The dropdown menu intelligently adjusts its open direction based on available viewport space, so it will never clip off screen regardless of which corner you choose.
+
+## Position values
+
+<ParamField path="position" type='"top-right" | "top-left" | "bottom-left" | "bottom-right"' default="top-right">
+  Sets the corner of the page where the widget button is anchored.
+</ParamField>
+
+| Value | Description |
+|---|---|
+| `"top-right"` (default) | Top-right corner of the page |
+| `"top-left"` | Top-left corner of the page |
+| `"bottom-left"` | Bottom-left corner of the page |
+| `"bottom-right"` | Bottom-right corner of the page |
+
+## Examples
+
+<CodeGroup>
+
+```javascript top-right
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  position: "top-right",
+});
+```
+
+```javascript top-left
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  position: "top-left",
+});
+```
+
+```javascript bottom-left
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  position: "bottom-left",
+});
+```
+
+```javascript bottom-right
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  position: "bottom-right",
+});
+```
+
+</CodeGroup>
+
+## CSS positioning classes
+
+Each position value maps to a CSS class applied to the widget's root element:
+
+| Value | CSS class |
+|---|---|
+| `"top-right"` | `.jigts-position-top-right` |
+| `"top-left"` | `.jigts-position-top-left` |
+| `"bottom-left"` | `.jigts-position-bottom-left` |
+| `"bottom-right"` | `.jigts-position-bottom-right` |
+
+<Tip>
+  To place the widget somewhere other than a fixed corner — for example, inline in your header or sidebar — override the position CSS class in your stylesheet. You can remove the `fixed` positioning and use whatever layout approach suits your design.
+</Tip>

@@ -1,0 +1,55 @@
+---
+title: "Theming"
+description: "Customize the widget's appearance using theme options and CSS overrides"
+---
+
+You have two ways to customize the widget's appearance: the `theme` config option for color changes, and direct CSS class overrides for full control over layout and style.
+
+## Theme config options
+
+Pass a `theme` object when initializing the widget to set the base color and text color.
+
+<ParamField path="theme.baseColor" type="string">
+  Sets the widget background and accent color. Accepts any valid CSS color value (hex, rgb, hsl). Defaults to white.
+</ParamField>
+
+<ParamField path="theme.textColor" type="string">
+  Sets the text color for all widget elements. Accepts any valid CSS color value. Defaults to black.
+</ParamField>
+
+```javascript
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  theme: {
+    baseColor: "#2563eb",  // Widget background and accent color
+    textColor: "#1f2937",  // Text color for all widget elements
+  },
+});
+```
+
+Under the hood, the widget sets two CSS custom properties on its root element:
+
+- `--jigts-custom-base-color` — applied from `theme.baseColor`
+- `--jigts-custom-text-color` — applied from `theme.textColor`
+
+You can also set these variables directly in your stylesheet if you prefer not to pass them through JavaScript config.
+
+## CSS class overrides
+
+Every element in the widget uses a `jigts-` prefixed CSS class. You can override these classes in your own stylesheet to change layout, spacing, borders, shadows, or any other property.
+
+```css
+.jigts-widget-trigger {
+  background-color: #eee !important;
+  border-radius: 8px !important;
+}
+```
+
+<Note>
+  You may need to use `!important` to override the widget's default styles, since the widget injects its own stylesheet.
+</Note>
+
+For the full list of available CSS selectors and what each one targets, see [CSS customization](/advanced/css-customization).
+
+<Tip>
+  If you are building a fully custom UI using the programmatic API (`window.translate()` and `window.resetTranslation()`), set `showUI: false` in your config to hide the default widget button entirely. This gives you a clean slate to build your own language selector.
+</Tip>

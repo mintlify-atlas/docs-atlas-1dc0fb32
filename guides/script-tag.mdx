@@ -1,0 +1,85 @@
+---
+title: "Script Tag (HTML)"
+description: Integrate the translation widget into any HTML page using a CDN script tag.
+---
+
+Use the CDN script tag approach to add the JigsawStack Translation Widget to any static HTML page without a build step or package manager.
+
+<Steps>
+  <Step title="Add the widget script before </body>">
+    Place the CDN script tag just before the closing `</body>` tag in your HTML file:
+
+    ```html
+    <script defer src="https://unpkg.com/translation-widget@latest/dist/index.min.js"></script>
+    ```
+
+    The `defer` attribute ensures the script loads after your HTML is parsed.
+  </Step>
+
+  <Step title="Initialize the widget">
+    Immediately after the CDN script tag, add a module script to configure and initialize the widget:
+
+    ```html
+    <script defer type="module">
+      TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+        pageLanguage: "en",
+        position: "top-right",
+        autoDetectLanguage: false,
+        showUI: true,
+        theme: {
+          baseColor: "",
+          textColor: "",
+        },
+      });
+    </script>
+    ```
+
+    Replace `"YOUR_PUBLIC_KEY_HERE"` with your public key from the [JigsawStack dashboard](https://jigsawstack.com).
+  </Step>
+
+  <Step title="(Optional) Add a widget container">
+    If you want to anchor the widget to a specific location in your page layout, add a container element:
+
+    ```html
+    <div class="translation-widget"></div>
+    ```
+
+    Place this `<div>` wherever you want the widget to appear in your HTML structure.
+  </Step>
+</Steps>
+
+## Complete example
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Website</title>
+  </head>
+  <body>
+    <h1>Welcome to my site!</h1>
+    <div class="translation-widget"></div>
+    <script defer src="https://unpkg.com/translation-widget@latest/dist/index.min.js"></script>
+    <script defer type="module">
+      TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+        pageLanguage: "en",
+        position: "top-right",
+        autoDetectLanguage: false,
+        showUI: true,
+        theme: {
+          baseColor: "",
+          textColor: "",
+        },
+      });
+    </script>
+  </body>
+</html>
+```
+
+<Note>
+  The CDN bundle exposes `TranslationWidget` as a global function on the `window` object. You can call it directly from any inline `<script>` tag after the bundle has loaded.
+</Note>
+
+<Tip>
+  See [Configuration Options](/configuration/options) for the full list of available config parameters, including `position`, `theme`, `autoDetectLanguage`, and more.
+</Tip>

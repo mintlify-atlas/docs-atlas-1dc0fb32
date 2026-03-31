@@ -1,0 +1,78 @@
+---
+title: "window.clearCache()"
+description: "Clear translation cache from localStorage for all languages or specific ones"
+---
+
+Call `window.clearCache()` to remove cached translations from localStorage. You can clear the cache for all languages at once or target specific language codes.
+
+The widget stores translations in localStorage using the prefix `jss-` combined with the target language code as the cache key (e.g., `jss-fr` for French). Clearing the cache forces the widget to fetch fresh translations from the JigsawStack API on the next translation request.
+
+## Signature
+
+```typescript
+window.clearCache(
+  lang_code: string[],
+  onComplete?: () => void,
+  onError?: (error: Error) => void
+): void
+```
+
+## Parameters
+
+<ParamField path="lang_code" type="string[]" required>
+  Array of language codes to clear from the cache. Pass an empty array `[]` to clear cached translations for **all** languages.
+</ParamField>
+
+<ParamField path="onComplete" type="function">
+  Callback called after the cache is cleared successfully.
+</ParamField>
+
+<ParamField path="onError" type="function">
+  Callback called if clearing the cache fails. Receives an `Error` object.
+</ParamField>
+
+## Return value
+
+This function returns `void`. Use the `onComplete` callback to react after the cache has been cleared.
+
+## Examples
+
+<CodeGroup>
+
+```javascript Clear all languages
+window.clearCache([], () => {
+  console.log('All translation cache cleared successfully');
+}, (err) => {
+  console.error('Error clearing cache:', err);
+});
+```
+
+```javascript Clear specific languages
+window.clearCache(['es', 'fr', 'de'], () => {
+  console.log('Cache cleared for Spanish, French, and German');
+}, (err) => {
+  console.error('Error clearing cache:', err);
+});
+```
+
+</CodeGroup>
+
+## Cache storage
+
+Translations are cached in `localStorage` using the prefix `jss-`. The cache key for each language is `jss-<langcode>` (e.g., `jss-fr` for French). Each key stores a JSON map of original text to translated text for all content translated to that language.
+
+## When to use
+
+Clear the cache when:
+
+- You have updated the content on your page and want users to receive fresh translations.
+- Previously cached translations are stale or incorrect.
+- You want to force the widget to re-fetch all translations from the API on the next request.
+
+<Tip>
+  Clearing the cache for all languages ensures every user gets fresh translations after a content update, regardless of which language they have selected.
+</Tip>
+
+<Note>
+  After the cache is cleared, the widget re-fetches translations from the JigsawStack API the next time a translation is requested. Each re-fetch counts against your API usage.
+</Note>

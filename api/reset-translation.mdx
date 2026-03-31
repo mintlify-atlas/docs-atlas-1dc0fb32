@@ -1,0 +1,67 @@
+---
+title: "window.resetTranslation()"
+description: "Reset the page to its original language or re-translate it to a different language"
+---
+
+Call `window.resetTranslation()` to restore the page to a specified language. This is typically used to return the page to its source language after a translation has been applied.
+
+When called, it restores the original text from `data-original-text` attributes stored on each translated element, restores any adjusted font sizes to their original values, and clears the active translation state.
+
+## Signature
+
+```typescript
+window.resetTranslation(
+  defaultLang: string,
+  onComplete?: (result: Pick<TranslationResult, "success" | "targetLanguage">) => void,
+  onError?: (error: Error) => void
+): void
+```
+
+## Parameters
+
+<ParamField path="defaultLang" type="string" required>
+  The language code to reset to. This should typically be your page's source language (e.g., `"en"` for English). The value is passed back in the `onComplete` callback to confirm which language was reset to.
+</ParamField>
+
+<ParamField path="onComplete" type="function">
+  Callback called when the reset completes. Receives an object with `success` (boolean) and `targetLanguage` (string).
+</ParamField>
+
+<ParamField path="onError" type="function">
+  Callback called if the reset fails. Receives an `Error` object.
+</ParamField>
+
+## Return value
+
+This function returns `void`. Use the `onComplete` callback or handle the side effects directly.
+
+## Example
+
+```javascript
+window.resetTranslation(
+  "en",
+  (res) => {
+    console.log(res);
+  },
+  (err) => {
+    console.error(err);
+  }
+);
+```
+
+## What reset does
+
+When you call `window.resetTranslation()`, the widget:
+
+1. Reads the `data-original-text` attribute on every translated element and restores the original text content.
+2. Restores the original font size for any element whose font size was adjusted during translation.
+3. Removes the `data-original-text`, `data-translated-lang`, and `data-original-font-size` attributes from all elements.
+4. Clears the internal translation state so the widget is ready for a fresh translation.
+
+<Note>
+  This overrides any earlier translation and returns all page content to the original language. If the widget has not translated the page yet, calling `window.resetTranslation()` has no visible effect.
+</Note>
+
+<Tip>
+  Use `window.resetTranslation()` to build a "reset to original" button in a custom UI. Pair it with `showUI: false` to hide the default widget and handle language switching entirely through your own interface.
+</Tip>

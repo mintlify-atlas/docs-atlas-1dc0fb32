@@ -1,0 +1,122 @@
+---
+title: "TypeScript Support"
+description: "Add TypeScript type declarations for the JigsawStack Translation Widget"
+---
+
+## npm Package
+
+When you install the widget via npm, types are included automatically through the `types` field in `package.json`. No extra setup is needed:
+
+```bash
+npm install translation-widget
+```
+
+Import and use the widget with full type coverage out of the box:
+
+```typescript
+import TranslationWidget from "translation-widget";
+
+TranslationWidget("YOUR_PUBLIC_KEY", {
+  pageLanguage: "en",
+  position: "top-right",
+});
+```
+
+---
+
+## CDN / Script Tag Method
+
+When you load the widget via a `<script>` tag, TypeScript has no knowledge of `window.TranslationWidget`. You need to declare it manually.
+
+### Declaring `window.TranslationWidget`
+
+Add the following global declaration to a `types.d.ts` or `global.d.ts` file in your project root:
+
+```typescript
+declare global {
+  interface Window {
+    TranslationWidget: (
+      publicKey: string,
+      config?: {
+        pageLanguage?: string;
+        position?: "top-right" | "top-left" | "bottom-left" | "bottom-right";
+        autoDetectLanguage?: boolean;
+        adjustFontSize?: boolean;
+        theme?: {
+          baseColor?: string;
+          textColor?: string;
+        };
+        showUI?: boolean;
+      }
+    ) => void;
+  }
+}
+```
+
+### Declaring the Programmatic API globals
+
+The widget also exposes `window.translate`, `window.resetTranslation`, and `window.clearCache`. Add these declarations alongside the one above:
+
+```typescript
+declare global {
+  interface Window {
+    translate: (
+      langCode: string,
+      onComplete?: (result: TranslationResult) => void,
+      onError?: (error: Error) => void
+    ) => Promise<TranslationResult>;
+    resetTranslation: (
+      defaultLang: string,
+      onComplete?: (result: Pick<TranslationResult, "success" | "targetLanguage">) => void,
+      onError?: (error: Error) => void
+    ) => void;
+    clearCache: (
+      lang_code: string[],
+      onComplete?: () => void,
+      onError?: (error: Error) => void
+    ) => void;
+  }
+}
+```
+
+<Tip>
+  Place all global declarations in a single `types.d.ts` or `global.d.ts` file
+  at the root of your project so TypeScript picks them up automatically across
+  your entire codebase.
+</Tip>
+
+---
+
+## Type Reference
+
+### `TranslationConfig`
+
+The full configuration interface accepted by the widget:
+
+```typescript
+export interface TranslationConfig {
+  pageLanguage?: string;
+  position?: "top-right" | "top-left" | "bottom-left" | "bottom-right";
+  autoDetectLanguage?: boolean;
+  adjustFontSize?: boolean;
+  theme?: {
+    baseColor?: string;
+    textColor?: string;
+  };
+  showUI?: boolean;
+}
+```
+
+### `TranslationResult`
+
+The result object returned by `window.translate` and passed to `onComplete` callbacks:
+
+```typescript
+export interface TranslationResult {
+  success: boolean;
+  targetLanguage: string;
+  translatedNodes: number;
+  error?: string;
+  duration?: number;
+}
+```

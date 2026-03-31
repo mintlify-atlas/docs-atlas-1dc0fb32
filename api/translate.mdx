@@ -1,0 +1,92 @@
+---
+title: "window.translate()"
+description: "Programmatically translate the page to a target language"
+---
+
+Call `window.translate()` to translate the page to any supported language without requiring the user to interact with the widget UI. This is useful when you want to trigger translation from your own code — for example, from a custom language picker, a URL change handler, or on page load.
+
+## Signature
+
+```typescript
+window.translate(
+  langCode: string,
+  onComplete?: (result: TranslationResult) => void,
+  onError?: (error: Error) => void
+): Promise<TranslationResult>
+```
+
+## Parameters
+
+<ParamField path="langCode" type="string" required>
+  BCP 47 language code of the target language. Examples: `"hi"` (Hindi), `"fr"` (French), `"es"` (Spanish), `"zh"` (Chinese).
+</ParamField>
+
+<ParamField path="onComplete" type="function">
+  Callback called when the translation finishes successfully. Receives a `TranslationResult` object with details about the completed translation.
+</ParamField>
+
+<ParamField path="onError" type="function">
+  Callback called if the translation fails. Receives an `Error` object describing what went wrong.
+</ParamField>
+
+## Return value
+
+Returns a `Promise<TranslationResult>`. You can either `await` the promise or use the `onComplete`/`onError` callbacks — both are supported.
+
+<ResponseField name="success" type="boolean" required>
+  Whether the translation completed successfully.
+</ResponseField>
+
+<ResponseField name="targetLanguage" type="string" required>
+  The language code that was translated to.
+</ResponseField>
+
+<ResponseField name="translatedNodes" type="number" required>
+  Number of DOM nodes that were translated on the page.
+</ResponseField>
+
+<ResponseField name="error" type="string">
+  Error message if the translation failed. Only present when `success` is `false`.
+</ResponseField>
+
+<ResponseField name="duration" type="number">
+  Time taken to complete the translation, in milliseconds.
+</ResponseField>
+
+## Examples
+
+<CodeGroup>
+
+```javascript Callback style
+// Translate to Hindi
+window.translate(
+  "hi",
+  (res) => {
+    console.log(res);
+  },
+  (err) => {
+    console.error(err);
+  }
+);
+```
+
+```javascript Async/await
+const result = await window.translate("fr");
+if (result.success) {
+  console.log(`Translated ${result.translatedNodes} nodes to French`);
+}
+```
+
+</CodeGroup>
+
+<Note>
+  Make sure the widget is initialized before calling `window.translate()`. If the widget has not been initialized, the call will fail with `"Translation widget not initialized"`.
+</Note>
+
+<Note>
+  If a translation is already in progress, the call will fail immediately with `"Translation already in progress"`. Wait for the current translation to complete before calling `window.translate()` again.
+</Note>
+
+<Tip>
+  Use `window.translate()` together with `showUI: false` to build a fully custom language selector UI without rendering the default widget trigger button.
+</Tip>

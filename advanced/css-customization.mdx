@@ -1,0 +1,134 @@
+---
+title: "CSS Customization"
+description: "Customize the widget's appearance by overriding its CSS classes"
+---
+
+The widget exposes predictable CSS class names prefixed with `jigts-`. You can override any of them in your own stylesheet to match the widget to your site's branding.
+
+<Note>
+  You may need to use `!important` in your CSS rules to ensure your custom
+  styles take precedence over the widget's default styles.
+</Note>
+
+## Quick Example
+
+Here's a simple override for the trigger button:
+
+```css
+.jigts-widget-trigger {
+  background-color: #eee !important;
+  border-radius: 8px !important;
+}
+```
+
+Add this rule to your main CSS file or a `<style>` block in your HTML. The widget picks up your custom styles automatically.
+
+---
+
+## CSS Selector Reference
+
+### Widget Container & Positioning
+
+| Selector                    | Description              |
+| --------------------------- | ------------------------ |
+| `.jigts-translation-widget` | Main container           |
+| `.jigts-widget-trigger`     | Main trigger button      |
+| `.jigts-widget-dropdown`    | Dropdown menu container  |
+
+### Trigger Button
+
+| Selector                 | Description                  |
+| ------------------------ | ---------------------------- |
+| `.jigts-widget-trigger`  | Main trigger button          |
+| `.jigts-trigger-content` | Content inside the trigger   |
+| `.jigts-trigger-icon`    | Icon container in trigger    |
+| `.jigts-languages-icon`  | Language globe icon (SVG)    |
+| `.jigts-trigger-loading` | Loading state container      |
+| `.jigts-loading-spinner` | Spinner animation            |
+
+### Dropdown Menu
+
+| Selector                  | Description                        |
+| ------------------------- | ---------------------------------- |
+| `.jigts-widget-dropdown`  | Dropdown container                 |
+| `.jigts-dropdown-header`  | Header section                     |
+| `.jigts-dropdown-title`   | Title area                         |
+| `.jigts-title-left`       | Left side of title (icon + text)   |
+| `.jigts-title-text`       | Title text                         |
+| `.jigts-language-count`   | Language count badge               |
+
+### Search Section
+
+| Selector                   | Description              |
+| -------------------------- | ------------------------ |
+| `.jigts-search-container`  | Search input container   |
+| `.jigts-search-icon`       | Search icon              |
+| `.jigts-search-input`      | Input field              |
+| `.jigts-clear-search`      | Clear search button      |
+
+### Reset Option
+
+| Selector                | Description                        |
+| ----------------------- | ---------------------------------- |
+| `.jigts-reset-option`   | Reset to original language button  |
+| `.jigts-reset-icon`     | Reset icon (SVG)                   |
+| `.jigts-reset-text`     | Reset text container               |
+| `.jigts-reset-title`    | Reset title text                   |
+| `.jigts-reset-subtitle` | Reset subtitle text                |
+
+### Language List
+
+| Selector                        | Description                    |
+| ------------------------------- | ------------------------------ |
+| `.jigts-language-list`          | List container                 |
+| `.jigts-language-item`          | Language item                  |
+| `.jigts-language-item.selected` | Selected item                  |
+| `.jigts-language-item.focused`  | Focused item                   |
+| `.jigts-language-name`          | Name text                      |
+| `.jigts-language-code`          | Code badge                     |
+| `.jigts-language-details`       | Extra details                  |
+| `.jigts-no-results`             | No results message container   |
+
+### Footer
+
+| Selector                  | Description     |
+| ------------------------- | --------------- |
+| `.jigts-dropdown-footer`  | Footer section  |
+| `.jigts-footer-text`      | Footer text     |
+
+### Responsive & Accessibility
+
+| Selector                                  | Description        |
+| ----------------------------------------- | ------------------ |
+| `@media (max-width: 640px)`               | Mobile styles      |
+| `@media (prefers-contrast: high)`         | High contrast mode |
+| `@media (prefers-reduced-motion: reduce)` | Reduced motion     |
+
+---
+
+## Dark Theme Example
+
+Here's a practical example of customizing the widget to match a dark-themed site:
+
+```css
+.jigts-widget-trigger {
+  background-color: #1a1a2e !important;
+  color: #e0e0e0 !important;
+  border: 1px solid #444 !important;
+}
+.jigts-widget-dropdown {
+  background-color: #16213e !important;
+  border-color: #444 !important;
+}
+.jigts-language-item:hover {
+  background-color: #0f3460 !important;
+}
+```
+
+---
+
+<Tip>
+  Use your browser's DevTools (right-click → Inspect) to identify which `jigts-`
+  class applies to the element you want to style, then experiment with overrides
+  directly in the Styles panel before adding them to your stylesheet.
+</Tip>

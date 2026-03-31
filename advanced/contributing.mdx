@@ -1,0 +1,95 @@
+---
+title: "Contributing"
+description: "Guide for contributing to the JigsawStack Translation Widget open source project"
+---
+
+Thank you for your interest in contributing to the JigsawStack Translation Widget. This page walks you through the full contribution workflow.
+
+## Contributing Workflow
+
+<Steps>
+  <Step title="Fork the repository">
+    Click the **Fork** button at the top right of the repository page on GitHub to create your own copy.
+  </Step>
+
+  <Step title="Clone your fork">
+    ```bash
+    git clone https://github.com/your-username/translation-widget.git
+    cd translation-widget
+    ```
+  </Step>
+
+  <Step title="Create a feature branch">
+    Use a descriptive branch name:
+
+    ```bash
+    git checkout -b feature/your-feature-name
+    ```
+  </Step>
+
+  <Step title="Set up your environment">
+    **Install dependencies:**
+
+    ```bash
+    yarn install
+    ```
+
+    **Create a `.env` file** in the project root with your JigsawStack public API key:
+
+    ```bash
+    VITE_TRANSLATION_WIDGET_PUBLIC_KEY=your_api_key_here
+    ```
+
+    **Build the project** (required before running the dev server):
+
+    ```bash
+    yarn build
+    ```
+
+    **Start the development server:**
+
+    ```bash
+    yarn dev
+    ```
+
+    Open your browser and visit `http://localhost:5173`.
+  </Step>
+
+  <Step title="Make your changes">
+    Follow the code style guidelines below. If your changes affect how the widget is used or configured, update the documentation accordingly.
+
+    <Note>
+      Update documentation if your changes affect usage.
+    </Note>
+  </Step>
+
+  <Step title="Commit and push">
+    ```bash
+    git add .
+    git commit -m "Describe your changes"
+    git push origin feature/your-feature-name
+    ```
+  </Step>
+
+  <Step title="Open a pull request">
+    Go to your fork on GitHub and click **Compare & pull request**.
+  </Step>
+</Steps>
+
+---
+
+## Code Style Guidelines
+
+- Use clear, descriptive variable and function names.
+- Write concise and meaningful commit messages.
+- Keep pull requests focused and minimal.
+
+---
+
+## Reporting Issues
+
+If you find a bug or have a feature request, open an issue on the [GitHub Issues page](https://github.com/JigsawStack/translation-widget/issues). When reporting a bug, please include:
+
+- Steps to reproduce the issue
+- Screenshots or screen recordings if applicable
+- Browser and environment details

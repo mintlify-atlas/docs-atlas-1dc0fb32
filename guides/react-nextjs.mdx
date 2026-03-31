@@ -1,0 +1,95 @@
+---
+title: "React / Next.js"
+description: Integrate the translation widget into a React or Next.js project using the npm package.
+---
+
+Use the `translation-widget` npm package to add the JigsawStack Translation Widget to your React or Next.js application.
+
+<Steps>
+  <Step title="Install the package">
+    Install `translation-widget` using your preferred package manager:
+
+    <CodeGroup>
+
+    ```bash npm
+    npm install translation-widget
+    ```
+
+    ```bash yarn
+    yarn add translation-widget
+    ```
+
+    ```bash pnpm
+    pnpm add translation-widget
+    ```
+
+    </CodeGroup>
+  </Step>
+
+  <Step title="Create a Translation component">
+    Create a new component file (e.g., `components/Translation.tsx`) that initializes the widget on the client side:
+
+    ```tsx
+    "use client";
+    import { useEffect } from "react";
+
+    export default function Translation() {
+      useEffect(() => {
+        if (typeof window === "undefined" || process.env.NEXT_PUBLIC_NODE_ENV === "development") return;
+
+        import("translation-widget").then(({ default: TranslationWidget }) => {
+          console.log("translation widget loaded");
+          TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+            showUI: true,
+            pageLanguage: "en",
+            position: "top-right",
+            autoDetectLanguage: false,
+          });
+        });
+      }, []);
+
+      return null;
+    }
+    ```
+
+    Replace `"YOUR_PUBLIC_KEY_HERE"` with your public key from the [JigsawStack dashboard](https://jigsawstack.com).
+  </Step>
+
+  <Step title="Add the component to your layout">
+    Import and render the `Translation` component in your layout file so it is present on every page:
+
+    ```tsx
+    import Translation from "./components/Translation";
+
+    export default function Layout({ children }) {
+      return (
+        <>
+          {children}
+          <Translation />
+        </>
+      );
+    }
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  The widget is loaded via a dynamic `import()` inside `useEffect`, which ensures it only runs in the browser. This prevents SSR errors when rendering on the server where `window` is not available.
+</Note>
+
+<Warning>
+  The component skips initialization when `process.env.NEXT_PUBLIC_NODE_ENV === "development"`. This is intentional — initializing the widget in development mode can cause inconsistencies between translated and original content across hot reloads.
+</Warning>
+
+## Framework-specific guides
+
+For detailed setup instructions tailored to your Next.js router version:
+
+<CardGroup cols={2}>
+  <Card title="Next.js App Router" icon="layer-group" href="/guides/nextjs-app-router">
+    For Next.js 13+ projects using the App Router with the `"use client"` directive and dynamic script loading.
+  </Card>
+  <Card title="Next.js Pages Router" icon="file-code" href="/guides/nextjs-pages-router">
+    For Next.js 12 and below projects using `_app.tsx` and the Next.js `Script` component.
+  </Card>
+</CardGroup>

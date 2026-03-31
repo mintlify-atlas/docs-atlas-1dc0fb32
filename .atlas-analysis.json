@@ -1,0 +1,85 @@
+{
+  "projectType": "sdk-library",
+  "projectName": "JigsawStack Translation Widget",
+  "projectDescription": "A drop-in, open source translation widget that translates any website with a single script, powered by JigsawStack's contextual translation engine.",
+  "theme": "luma",
+  "primaryColor": "#040404",
+  "lightColor": null,
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "getting-your-api-key"
+            ]
+          },
+          {
+            "group": "Integration Guides",
+            "pages": [
+              "guides/script-tag",
+              "guides/react-nextjs",
+              "guides/nextjs-app-router",
+              "guides/nextjs-pages-router"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/options",
+              "configuration/theming",
+              "configuration/positioning",
+              "configuration/language-detection"
+            ]
+          },
+          {
+            "group": "Programmatic API",
+            "pages": [
+              "api/translate",
+              "api/reset-translation",
+              "api/clear-cache"
+            ]
+          },
+          {
+            "group": "Advanced",
+            "pages": [
+              "advanced/css-customization",
+              "advanced/typescript-support",
+              "advanced/caching",
+              "advanced/contributing"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Single-script drop-in installation for any website",
+    "Supports 100+ languages with automatic language detection",
+    "Smart localStorage caching for fast repeat translations",
+    "URL-based language switching via ?lang= parameter",
+    "Programmatic API: window.translate(), window.resetTranslation(), window.clearCache()",
+    "Fully customizable UI with CSS class overrides and theme options",
+    "Responsive design with optional automatic font size adjustment",
+    "Works with React, Next.js (App Router & Pages Router), and plain HTML",
+    "Context-aware translations powered by JigsawStack AI"
+  ],
+  "publicApiSurface": [
+    "TranslationWidget(publicKey: string, config?: TranslationConfig) — default export, initializes the widget",
+    "window.translate(langCode, onComplete?, onError?) — programmatically translate the page",
+    "window.resetTranslation(defaultLang, onComplete?, onError?) — reset page to original language",
+    "window.clearCache(langCodes[], onComplete?, onError?) — clear translation cache",
+    "TranslationConfig.pageLanguage — source language of the page",
+    "TranslationConfig.position — widget position: top-right | top-left | bottom-left | bottom-right",
+    "TranslationConfig.autoDetectLanguage — auto-detect browser language",
+    "TranslationConfig.adjustFontSize — scale font size for longer translations",
+    "TranslationConfig.showUI — toggle the default widget UI on/off",
+    "TranslationConfig.theme.baseColor — widget background/accent color",
+    "TranslationConfig.theme.textColor — widget text color"
+  ]
+}

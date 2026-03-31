@@ -1,0 +1,70 @@
+---
+title: "Configuration Options"
+description: "Complete reference for all TranslationWidget configuration options"
+---
+
+Complete reference for the `TranslationConfig` interface. All options are optional — the widget works out of the box with sensible defaults.
+
+## Options
+
+<ParamField path="pageLanguage" type="string" default="en">
+  The language of your page content. Use a BCP 47 language code (e.g., `"en"`, `"fr"`, `"es"`). The widget uses this as the baseline language when determining whether a translation is needed and when resetting back to the original.
+</ParamField>
+
+<ParamField path="position" type='"top-right" | "top-left" | "bottom-left" | "bottom-right"' default="top-right">
+  Where the widget button appears on screen. The dropdown intelligently adjusts its open direction based on available viewport space so it won't clip off screen.
+</ParamField>
+
+<ParamField path="autoDetectLanguage" type="boolean" default="false">
+  When `true`, the widget reads the user's browser language (`navigator.language`) and automatically translates the page on load if the detected language differs from `pageLanguage`.
+</ParamField>
+
+<ParamField path="adjustFontSize" type="boolean" default="false">
+  When `true`, the widget scales down font size for translated text that is longer than the original to prevent overflow. Font size is clamped between a minimum of 12px and the element's original font size, and scales based on the ratio of original to translated text length.
+</ParamField>
+
+<ParamField path="theme" type="object">
+  Controls the widget's visual appearance. Accepts the following nested properties:
+
+  <Expandable title="properties">
+    <ParamField path="theme.baseColor" type="string">
+      The background and accent color of the widget. Accepts any valid CSS color value (hex, rgb, hsl). Defaults to white.
+    </ParamField>
+
+    <ParamField path="theme.textColor" type="string">
+      The text color for all widget elements. Accepts any valid CSS color value. Defaults to black.
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField path="showUI" type="boolean" default="true">
+  Toggle the default widget UI. Set to `false` when you want programmatic control only (using `window.translate()` and `window.resetTranslation()`) without rendering the floating button.
+</ParamField>
+
+## Complete example
+
+```javascript
+TranslationWidget("YOUR_PUBLIC_KEY_HERE", {
+  pageLanguage: "en",
+  position: "top-right",
+  autoDetectLanguage: false,
+  adjustFontSize: false,
+  showUI: true,
+  theme: {
+    baseColor: "#2563eb",
+    textColor: "#1f2937",
+  },
+});
+```
+
+## Language priority order
+
+<Note>
+  When the widget initializes, it determines which language to display using the following priority order:
+
+  1. `lang` URL parameter (e.g., `?lang=fr`)
+  2. User's previously selected language stored in `localStorage` under the key `jss-pref`
+  3. `pageLanguage` config option (default: `"en"`)
+
+  This means a URL parameter always wins, followed by a returning user's saved preference, and finally the default you configured.
+</Note>
